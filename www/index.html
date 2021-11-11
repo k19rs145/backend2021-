@@ -14,10 +14,43 @@ var TestClass = ncmb.DataStore("RegisterTest2");
 var testRecord = new TestClass();
 testRecord.set("message2", "hello, world");
 testRecord.save();
+ $(function(){
+      $("#message").html("initialized");
+      $("#btnA").click(function(e){
+        btnAClick(e);
+      })
+      $("#btnB").click(function(e){
+        btnBClick(e);
+      })
+      function btnBClick(e) {
+      var testClass = new TestClass();
+      var key = $("#field").val();
+      var value = $("#value").val();
+      testClass.set(key, value);
+      testClass.save()
+      .then(function(m) {
+        $("#message").html("New object created with objectId: " + testClass.objectId);
+      })
+      .catch(function(err){
+        $("#message").html("Failed to create new object, with error code: " + JSON.stringify(err));
+      })
+    }
     </script>
 </head>
 <body>
-	<br />
-    This is a template for Monaca app.
+<h1>Registration Sample</h1>
+  <div>
+    <label for="field">Field:</label>
+    <input id="field" type="text" value="message">
+  </div>
+  <div>
+    <label for="value">Value:</label>
+    <input id="value" type="text" value="Hello, mBaaS!">
+  </div>
+  <div id="button">
+    <button id="btnA" class="btn">Regist 1</button>
+    <button id="btnB" class="btn">Regist 2</button>
+  </div>
+  <div id="message"></div>
 </body>
 </html>
